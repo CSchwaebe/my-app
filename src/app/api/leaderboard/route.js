@@ -28,6 +28,8 @@ export async function GET(req) {
             gameweek: gw
         }).toArray();
 
+        console.log(all_teams)
+
         const results = sortTeams(all_teams);
 
         let ret_obj = {
