@@ -18,7 +18,6 @@ export default function Team() {
 
     useEffect(() => {
         setLoading(true)
-        console.log(address)
         fetch('/api/profile/' + address)
         //fetch('/api/bootstrap/team')
             .then((res) => res.json())
