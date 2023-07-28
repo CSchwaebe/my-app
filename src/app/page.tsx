@@ -1,12 +1,22 @@
 // Imports
 // ========================================================
 import React from 'react';
-import Header from './components/header';
-import Container from './components/mainContainer';
+import { AdvancedImage, placeholder } from '@cloudinary/react';
+import Image from 'next/image';
+import {Cloudinary}  from "@cloudinary/url-gen";
+
+const cld = new Cloudinary({
+  cloud: {
+      cloudName: 'bigkatoriginal'
+  }
+});
 
 // Page
 // ========================================================
 export default function Home() {
+  
+  
+  // https://res.cloudinary.com/bigkatoriginal/image/upload/v1690500548/coff33blak_dark_black_and_purple_repeating_texture_soccer_116378ad-7e53-407c-b2be-7e375bdbf176-transformed_1.png
   // Render
   return (
     <div>
@@ -25,7 +35,8 @@ export default function Home() {
             <button className="btn btn-primary">Get Started</button>
           </div>
 
-          <img src="https://res.cloudinary.com/bigkatoriginal/image/upload/a_352/v1690566043/og_2-removebg-preview_2.webp"
+
+          <img src="https://res.cloudinary.com/bigkatoriginal/image/upload/a_352/v1690566043/og_2-removebg-preview_2.webp" alt="Background Image"
             className="w-1/3 rounded-lg opacity-100" />
 
 
@@ -35,6 +46,7 @@ export default function Home() {
       <div className="hero pt-24">
         <div className="hero-content flex-col lg:flex-row-reverse">
           <img src="https://res.cloudinary.com/bigkatoriginal/image/upload/v1690506285/coff33blak_minimalistic_coin_logo_with_the_letters_FPC_5fb2f6a6-0711-4a7d-b75d-ea6bed41f456_2.webp"
+             alt="Coin Image"
             className="w-1/3 rounded-lg" />
           <div className="bg-opacity-80 bg-black p-4 rounded">
             <h1 className="text-5xl font-bold text-white-100">Introducing FPC</h1>
@@ -69,7 +81,7 @@ export default function Home() {
             <div className="col-span-1"></div>
             <div className="col-span-2 bg-opacity-80 bg-black p-4 rounded ">
 
-              <h1 className="text-5xl font-bold text-white-100 text-center">What's next?</h1>
+              <h1 className="text-5xl font-bold text-white-100 text-center">{"What's next?"}</h1>
               <p className="text-white-200 p-0 my-6 antialiased tracking-wide text-lg">
                 Get ready for adrenaline-pumping Leagues and Head-to-Head match-ups, where you directly
                 take on friends and fellow managers in gripping showdowns.
