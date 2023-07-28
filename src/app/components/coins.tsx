@@ -46,33 +46,26 @@ export default function Coins() {
     * MAIN RENDER *
     ******************************************************************/
     if (isDisconnected) return (
-        <div className="w-1/1 block">
-            <div>Connect Wallet</div>
+        <div className="block rounded-full px-4 py-2 mt-4 lg:inline-block lg:mt-0 text-white-100 bg-purple-700 hover:text-teal-400 mr-4">
+            <button className="text-center text-sm">{"0 FPC"}</button>
         </div>
     )
 
     if (isLoading) return <p>Loading...</p>
 
+
     return (
-        <div className="w-1/1">   
-            <div className='bg-purple-700 mt-0'>
-                <div className='w-1/1 m-0 bg-white-100 overflow-hidden grid grid-rows-7'>
-                    <h2 className="row-span-1 bg-purple-700 p-2 text-center text-white-100 text-sm antialiased tracking-wide font-bold">Balance</h2>
-                    <h3 className="row-span-1 border-purple-700 w-1/1 text-center text-purple-700 p-2 text-sm">{balance_data?.formatted.substring(0, 7)}</h3>
-
-                    <h2 className="row-span-1 bg-purple-700 p-2 text-center text-white-100 text-sm antialiased tracking-wide font-bold">Buy More</h2>
-                    <button onClick={() => buyCoins(0.0025)} className="row-span-1 border-purple-700 w-1/1 text-center text-purple-700 p-2 text-sm hover:bg-green-400">100</button>
-                    <button onClick={() => buyCoins(0.005)} className="row-span-1 border-purple-700 w-1/1 text-center text-purple-700 p-2 text-sm hover:bg-green-400">200</button>
-                    <button onClick={() => buyCoins(0.0125)} className="row-span-1 border-purple-700 w-1/1 text-center text-purple-700 p-2 text-sm hover:bg-green-400">500</button>
-                    <button onClick={() => buyCoins(0.025)} className="row-span-1 border-purple-700 w-1/1 text-center text-purple-700 p-2 text-sm hover:bg-green-400">1000</button>
-                </div>
-
-                
-
+        <div className="block pr-4 py-2 mt-4 lg:inline-block lg:mt-0 mr-4">
+            
+            <div className="block rounded-full px-4 py-2 mt-4 lg:inline-block lg:mt-0 text-purple-700 bg-teal-400 mr-4">
+                <button onClick={() => buyCoins(0.025)} className="text-center text-sm">{"Buy 1000 FPC"}</button>
+            </div>
+            <div className="block pr-4 py-2 mt-4 lg:inline-block lg:mt-0 text-purple-700">
+                <p className="text-center text-sm text-red-400">{"Balance: " + balance_data?.formatted.substring(0, 7) + " FPC"}</p>
 
             </div>
-
         </div>
+
     )
 }
 

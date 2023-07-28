@@ -11,7 +11,6 @@ import {
     injectedWallet,
     metaMaskWallet,
     coinbaseWallet,
-    walletConnectWallet,
     rabbyWallet
   } from '@rainbow-me/rainbowkit/wallets';
 import { configureChains, createConfig, WagmiConfig } from 'wagmi';
@@ -61,7 +60,6 @@ const connectors = connectorsForWallets([
         metaMaskWallet({ projectId, chains }),
         rabbyWallet({ chains }),
         coinbaseWallet({ chains, appName: 'Fantasy Prem' }),
-        walletConnectWallet({ projectId, chains }),
       ],
     },
   ]);

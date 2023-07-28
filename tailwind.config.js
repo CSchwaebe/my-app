@@ -109,5 +109,31 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  daisyui: {
+    themes: [
+      {
+        mytheme: {
+
+          "primary": "#38003c",
+
+          "secondary": "#00ff85",
+
+          "accent": "#04f5ff",
+
+          "neutral": "#2b3440",
+
+          "base-100": "#ffffff",
+
+          "info": "#04f5ff",
+
+          "success": "#00ff85",
+
+          "warning": "#e90052",
+
+          "error": "#e90052",
+        },
+      },
+    ],
+  },
+  plugins: [require("@tailwindcss/typography"), require("daisyui")],
 }

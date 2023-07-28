@@ -7,7 +7,6 @@ import { usePrepareContractWrite, useContractWrite, useContractRead, useAccount 
 import nft_contract from '../contract_artifacts/MyNFTContract.json'
 import erc_contract from '../contract_artifacts/MyERC20Token.json'
 import { ethers } from 'ethers';
-import Coins from "../components/coins";
 
 export default function Marketplace() {
     const [players, setPlayers] = useState([])
@@ -79,13 +78,45 @@ export default function Marketplace() {
     * HELPER FUNCTIONS *
     *****************************************************************/
 
-
     /*****************************************************************
     * The following functions are used to render components *
     *****************************************************************/
 
-    // Returns each individual card in the search list
     function playerCard(player: any) {
+
+        return (
+            <div className="card w-64 glass m-4">
+                <div className="group">
+                <figure className="pt-4 px-4"><AdvancedImage className="" cldImg={cld.image('p' + player.code)} plugins={[placeholder({ mode: 'blur' })]} />
+                </figure>
+                <div className="relative -mt-12 invisible group-hover:visible">
+                        <button className="h-12 w-full py-2 px-4 bg-teal-400 hover:bg-teal-300 text-purple-700 font-bold"
+                            onClick={() =>
+                                write_mintNFT({
+                                    args: [player.code],
+                                    onError(error: any) {
+                                        console.log("HELLO")
+                                        console.log('Error', error)
+                                    },
+                                })/*mintPlayer(player.code)*/}>Mint</button>
+                    </div>
+
+                    </div>
+
+                <div className="group text-base-100">
+                    <div className='flex text-green-400 antialiased font-black p-4'>
+                        <h2 className="flex-3 text-left text-white-100">{player.display_name}</h2>
+                        <h2 className="flex-1 text-right">{player.now_cost + " FPC"}</h2>
+                    </div>
+                   
+                </div>
+            </div>
+        )
+    }
+
+    // Returns each individual card in the search list
+
+    function playerCard_old(player: any) {
 
         return (
             <div className="shadow-md w-64 box-border m-2 p-0 rounded-3xl bg-purple-700 flex-initial border-4 border-purple-700 hover:cursor-pointer hover:border-green-400 overflow-hidden" key={player._id}>
@@ -114,7 +145,7 @@ export default function Marketplace() {
 
     // Returns the first X players matching the search criteria
     function searchList() {
-        const filtered = filteredPlayers.slice(0, 8).map(player => playerCard(player));
+        const filtered = filteredPlayers.slice(0, 20).map(player => playerCard(player));
         return (
             <div className="flex flex-row flex-wrap justify-center p-6">
                 {filtered}
@@ -125,7 +156,18 @@ export default function Marketplace() {
     /*****************************************************************
     * MAIN RENDER *
     ******************************************************************/
-    if (isFetching) return <p>Loading...</p>
+    if (isFetching) return (
+        <div className="w-1/1 h-1/1 block">
+            <div className="h-32 w-full grid grid-cols-3"></div>
+            <div className="h-64 w-full grid grid-cols-3">
+                <div className="col-span-1"></div>
+                <div className="col-span-1 flex">
+                    <h3 className="flex-1 loading loading-ring loading-lg text-secondary text-center"></h3>
+                </div>
+                <div className="col-span-1"></div>
+            </div>
+        </div>
+    )
 
     if (isDisconnected) return (
         <div className="w-1/1 block">
@@ -134,9 +176,11 @@ export default function Marketplace() {
     )
 
     if (!isLoading_allowance && Number(ethers.formatEther(data_allowance)) < 250) return (
-        <div className="w-1/1 p-6">
+        <div className="w-1/1 p-6 pt-12">
             <div className='text-white-100 w-full text-center font-bold antialiased text-3xl'>
-                <h1 className='tracking-wide'>Increase Your Spending Limit to Access the Marketplace</h1>
+                
+                    <h1 className='tracking-wide'>Increase Your Spending Limit to Access the Marketplace</h1>
+               
             </div>
             <div className='grid grid-cols-2 mt-12'>
                 <div className="flex justify-center">
@@ -170,22 +214,11 @@ export default function Marketplace() {
 
         <div>
             <div className="w-1/1 grid grid-cols-8">
-                {/* Coins */}
-                <div className="absolute right-0 top-0 mt-64" >
-                    <Coins></Coins>
-                </div>
 
                 <div className="col-span-8 p-8">
-                    {/* Search input */}
-                    <form className="">
-                        <div className="relative">
-                            <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                                <svg aria-hidden="true" className="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                            </div>
-                            <input type="search" onChange={handleChange}
-                                className="block w-full p-4 pl-10 text-sm text-purple-700 border border-white-200 rounded-lg bg-white-100 focus:outline-none" placeholder="" required />
-                        </div>
-                    </form>
+                    <input type="search" onChange={handleChange} placeholder="Search" className="text-base-100 input input-bordered w-full bg-transparent input-accent" required/>
+
+                   
                     {searchList()}
                 </div>
 

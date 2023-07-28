@@ -4,6 +4,7 @@
 // ========================================================
 import React from 'react';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
+import Coins from './coins';
 
 
 // Page
@@ -15,11 +16,12 @@ export default function Header() {
     // Render
     return (
         <nav className="flex items-center justify-between flex-wrap bg-white-100 pr-6 py-2">
-            <div className="flex items-center flex-shrink-0 text-purple-700 mr-6">
-                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" id="Layer_1"
-                    x="0px" y="0px" viewBox="0 0 600 450"
-                    width="90px" height="67.5px">
-                    <path fill="#38003c" d="M214,75.4c15.5,7.3,25.8,16.2,27.6,17.6c-0.7-4.1-3.9-23.5-5.9-35.4c8.9,6.2,30.4,21,37.2,25.8
+            <a href="/">
+                <div className="flex items-center flex-shrink-0 text-purple-700 mr-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" id="Layer_1"
+                        x="0px" y="0px" viewBox="0 0 600 450"
+                        width="90px" height="67.5px">
+                        <path fill="#38003c" d="M214,75.4c15.5,7.3,25.8,16.2,27.6,17.6c-0.7-4.1-3.9-23.5-5.9-35.4c8.9,6.2,30.4,21,37.2,25.8
 	c2.7-8.7,12.8-37.2,12.8-37.2s17.8,28.6,20.6,33.4c3.9-3.7,24.9-27.4,30.4-33.4c1.1,13.5,2.1,33.1,2.5,35.9
 	c1.1-1.4,9.4-12.8,22.8-23.5c-5.9,11.7-8.7,27.6-10.1,40.7c-13.5-3.9-27.6-5.9-42-5.9c-27.9,0-54.4,7.3-77.2,20.3
 	C228.8,101,222.6,85.4,214,75.4z M428.3,320.7L415.9,307c-3.4,36.8-21.7,68.3-54.8,90.2l-5.3-19.9c-28.3,20.3-76.5,33.4-118.1,10.1
@@ -36,9 +38,10 @@ export default function Header() {
 	C347.8,262,370.2,243.3,377.1,237.3z M396.3,273.4c0,0-1.4-8.2-8.2-15.8l-14.8,0.5c0,0-20.3,17.1-32.4,17.6c0,0,6.9,12.8,10.3,19.2
 	c6.9-1.4,18.5-6.9,23.5-12.3c0,0,3.2,10.3,2.5,22.4C383.9,300.6,393.3,290.1,396.3,273.4z M402.4,207.6
 	c-7.5,6.2-13.7,10.1-13.7,10.1v19.9c5.5,5.9,10.7,11,14.8,19.9C411.1,244.2,409.3,224.3,402.4,207.6z"/>
-                </svg>
-                <span className="font-semibold text-xl tracking-tight">Fantasy Prem</span>
-            </div>
+                    </svg>
+                    <span className="font-semibold text-xl tracking-tight">Fantasy Prem</span>
+                </div>
+            </a>
             <div className="block lg:hidden">
                 <button className="flex items-center px-3 py-2 border rounded text-purple-700 border-teal-400 hover:text-white hover:border-white">
                     <svg className="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" /></svg>
@@ -60,6 +63,7 @@ export default function Header() {
                     <a href="/faq" className="block mt-4 lg:inline-block lg:mt-0 text-purple-700 hover:text-red-400 mr-4">
                         FAQ
                     </a>
+                    <Coins />
                 </div>
                 <div>
                     <ConnectButton />

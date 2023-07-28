@@ -19,7 +19,7 @@ export default function Team() {
     useEffect(() => {
         setLoading(true)
         fetch('/api/profile/' + address)
-        //fetch('/api/bootstrap/team')
+            //fetch('/api/bootstrap/team')
             .then((res) => res.json())
             .then((data) => {
                 console.log(data)
@@ -226,7 +226,7 @@ export default function Team() {
             alert("Your team is too expensive. Please remove some players before saving.")
             return
         }
-        
+
 
         let obj = {
             wallet_address: address,
@@ -375,7 +375,19 @@ export default function Team() {
         </div>
     )
 
-    if (isLoading) return <p>Loading...</p>
+    if (isLoading) return (
+        <div className="w-1/1 h-1/1 block">
+            <div className="h-32 w-full grid grid-cols-3"></div>
+            <div className="h-64 w-full grid grid-cols-3">
+                <div className="col-span-1"></div>
+                <div className="col-span-1 flex">
+                    <h3 className="flex-1 loading loading-ring loading-lg text-secondary text-center"></h3>
+                </div>
+                <div className="col-span-1"></div>
+            </div>
+        </div>
+
+    )
 
     if (address) return (
         <div className="w-1/1 block">
@@ -416,6 +428,6 @@ export default function Team() {
     );
     */
 
-    
+
 }
 
