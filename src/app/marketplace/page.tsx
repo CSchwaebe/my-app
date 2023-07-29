@@ -46,7 +46,7 @@ export default function Marketplace() {
         address: process.env.NEXT_PUBLIC_ERC_CONTRACT_ADDRESS,
         abi: erc_contract.abi,
         functionName: "approve",
-        args: [process.env.NEXT_PUBLIC_NFT_CONTRACT_ADDRESS, 100],
+        args: [process.env.NEXT_PUBLIC_NFT_CONTRACT_ADDRESS, 10000000000000000000000],
     })
 
 
