@@ -14,7 +14,7 @@ export default function Marketplace() {
 
     useEffect(() => {
         setFetching(true)
-        fetch('/api/leaderboard')
+        fetch('/api/leaderboard', { next: { revalidate: 10 } })
             .then((res) => res.json())
             .then((data) => {
                 console.log(data)
@@ -94,7 +94,7 @@ export default function Marketplace() {
     if (isFetching) return (
         <Loading />
     )
-    
+
     if (isDisconnected) return (
         <ConnectWalletPopup />
     )
