@@ -7,6 +7,8 @@ import { usePrepareContractWrite, useContractWrite, useContractRead, useAccount 
 import nft_contract from '../contract_artifacts/MyNFTContract.json'
 import erc_contract from '../contract_artifacts/MyERC20Token.json'
 import { ethers } from 'ethers';
+import ConnectWalletPopup from '../components/connectWalletPopup';
+import Loading from '../components/loading';
 
 export default function Marketplace() {
     const [players, setPlayers] = useState([])
@@ -157,22 +159,11 @@ export default function Marketplace() {
     * MAIN RENDER *
     ******************************************************************/
     if (isFetching) return (
-        <div className="w-1/1 h-1/1 block">
-            <div className="h-32 w-full grid grid-cols-3"></div>
-            <div className="h-64 w-full grid grid-cols-3">
-                <div className="col-span-1"></div>
-                <div className="col-span-1 flex">
-                    <h3 className="flex-1 loading loading-ring loading-lg text-secondary text-center"></h3>
-                </div>
-                <div className="col-span-1"></div>
-            </div>
-        </div>
+       <Loading />
     )
 
     if (isDisconnected) return (
-        <div className="w-1/1 block">
-            <div>Connect Wallet</div>
-        </div>
+        <ConnectWalletPopup />
     )
 
     if (!isLoading_allowance && Number(ethers.formatEther(data_allowance)) < 250) return (

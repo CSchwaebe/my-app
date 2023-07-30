@@ -2,7 +2,8 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { usePrepareContractWrite, useContractWrite, useContractRead, useAccount } from "wagmi";
-
+import ConnectWalletPopup from '../components/connectWalletPopup';
+import Loading from '../components/loading';
 
 export default function Marketplace() {
     const [teams, setTeams] = useState([])
@@ -90,12 +91,12 @@ export default function Marketplace() {
     /*****************************************************************
     * MAIN RENDER *
     ******************************************************************/
-    if (isFetching) return <p>Loading...</p>
-
+    if (isFetching) return (
+        <Loading />
+    )
+    
     if (isDisconnected) return (
-        <div className="w-1/1 block">
-            <div>Connect Wallet</div>
-        </div>
+        <ConnectWalletPopup />
     )
 
     if (true) return (

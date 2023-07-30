@@ -3,6 +3,8 @@ import { AdvancedImage, placeholder } from '@cloudinary/react';
 import { Cloudinary } from "@cloudinary/url-gen";
 import React, { useState, useEffect } from 'react';
 import { useAccount } from 'wagmi'
+import ConnectWalletPopup from '../components/connectWalletPopup';
+import Loading from '../components/loading';
 
 export default function Team() {
     const [players, setPlayers] = useState([])
@@ -38,7 +40,7 @@ export default function Team() {
     });
 
     // The results from the search
-    const filteredPlayers = players.filter(
+    const filteredPlayers = players?.filter(
         player => {
             return (
                 player
@@ -370,23 +372,11 @@ export default function Team() {
      * MAIN RENDER *
      *****************************************************************/
     if (isDisconnected) return (
-        <div className="w-1/1 block">
-            <div>Connect Wallet</div>
-        </div>
+        <ConnectWalletPopup />
     )
 
     if (isLoading) return (
-        <div className="w-1/1 h-1/1 block">
-            <div className="h-32 w-full grid grid-cols-3"></div>
-            <div className="h-64 w-full grid grid-cols-3">
-                <div className="col-span-1"></div>
-                <div className="col-span-1 flex">
-                    <h3 className="flex-1 loading loading-ring loading-lg text-secondary text-center"></h3>
-                </div>
-                <div className="col-span-1"></div>
-            </div>
-        </div>
-
+       <Loading />
     )
 
     if (address) return (
