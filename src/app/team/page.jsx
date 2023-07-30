@@ -261,12 +261,12 @@ export default function Team() {
         //const cloudinary_base_url = "https://res.cloudinary.com/bigkatoriginal/image/upload/v1689018706/p"
         return (
             <button onClick={() => addToTeam(player)}>
-                <div className="w-1/1 grid grid-cols-5 border-b-2 border-purple-700 bg-white-100 hover:cursor-pointer hover:bg-green-400 overflow-hidden" key={player._id}>
-                    <div className="col-span-1">
-                        <AdvancedImage className="p-2 pr-0 h-14" cldImg={cld.image(getSlug(player.shirt_url))} plugins={[placeholder({ mode: 'blur' })]} />
+                <div className="w-1/1  border-b-2 border-white-100 glass bg-none text-white-100 hover:cursor-pointer hover:bg-green-400 hover:text-white-700 overflow-hidden" key={player._id}>
+                    <div className="inline-block float-left w-12">
+                        <AdvancedImage className="p-2 pr-0 h-14 w-10" cldImg={cld.image(getSlug(player.shirt_url))} plugins={[placeholder({ mode: 'blur' })]} />
                     </div>
 
-                    <div className='col-span-3 p-2 text-purple-700 antialiased font-black text-sm'>
+                    <div className='inline-block float-left p-2 antialiased font-black text-sm'>
                         <h2 className="text-left font-bold">{player.display_name}</h2>
                         <h2 className="text-left">
                             <span className="font-normal">{player.team_abbreviation} </span>
@@ -274,7 +274,7 @@ export default function Team() {
                         </h2>
                     </div>
 
-                    <div className='col-span-1 text-purple-700 antialiased font-bold p-2 align-middle text-sm'>
+                    <div className='inline-block float-right antialiased font-bold p-2 align-middle text-sm'>
                         <h2 className="text-right">{player.now_cost}</h2>
                     </div>
                 </div>
@@ -286,7 +286,7 @@ export default function Team() {
     function searchList() {
         const filtered = filteredPlayers.slice(0, 25).map(player => searchCard(player));
         return (
-            <div className="overflow-scroll grid grid-cols-1 border-2 border-t-0 border-purple-700 box-border" style={{ "maxHeight": 'calc(90vh - 56px)' }}>
+            <div className="overflow-scroll grid grid-cols-1 border-t-0 border-white-100 box-border" style={{ "maxHeight": 'calc(90vh - 56px)' }}>
                 {filtered}
             </div>
         );
@@ -391,7 +391,19 @@ export default function Team() {
 
     if (address) return (
         <div className="w-1/1 block">
+
+            { /* Header */}
+            <div className="w-full grid grid-cols-4 py-4 pr-6 glass bg-none text-white-200">
+                <div className='col-span-3'>
+                <h2 className="text-center font-bold text-2xl antialiased">Your Team</h2>
+
+                    </div>
+                <div className='col-span-1'>
+                    <h2 className="text-center font-bold text-2xl antialiased">Your Players</h2>
+                    </div>
+            </div>
             <div className="w-full h-full grid grid-cols-4 pt-6 pr-6">
+
                 { /* Pitch */}
                 <div className='h-full col-span-3'>
                     <div className='relative w-full' style={{ height: '90vh' }}>
@@ -403,15 +415,10 @@ export default function Team() {
 
                 { /* Search Bar and results list */}
                 <div className="col-span-1 shadow-base overflow-hidden">
-                    <form>
-                        <div className="relative">
-                            <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                                <svg aria-hidden="true" className="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                            </div>
-                            <input type="search" onChange={handleChange}
-                                className="block w-full p-4 pl-10 text-sm text-purple-700 border-2 border-purple-700 bg-white-100 focus:outline-none" placeholder="" required />
-                        </div>
-                    </form>
+                    
+                    <input type="search" onChange={handleChange} placeholder="Search" 
+                    className="glass bg-none rounded-none text-base-100 input input-bordered w-full bg-transparent input-accent" required/>
+
                     {searchList()}
                 </div>
             </div>
