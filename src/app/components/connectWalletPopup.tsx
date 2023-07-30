@@ -17,7 +17,7 @@ export default function connectWalletPopup() {
         <div className="hero-content text-center">
           <div className="max-w-md">
             <p className="py-6">
-Oh, look at this big shot trying to get into Fantasy Prem without a connected wallet. Kinda like trying to take a penalty shot with no ball, don’t ya think? Let's connect that wallet and kick things off!</p>
+{"Oh, look at this big shot trying to get into Fantasy Prem without a connected wallet. Kinda like trying to take a penalty shot with no ball, don’t ya think? Let's connect that wallet and kick things off!"}</p>
           </div>
         </div>
       </div>
