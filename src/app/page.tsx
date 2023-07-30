@@ -75,7 +75,7 @@ export default function Home() {
             <div className="inline-block float-left glass bg-none bg-black bg-opacity-50 p-4 rounded ">
               <h1 className="text-5xl font-bold text-white-100 text-center">How does it work?</h1>
               <p className="text-white-200 p-0 my-6 antialiased tracking-wide text-lg">
-                Connect your wallet, mint FPC via the purple button, and immerse yourself in the game. Purchase players in the marketplace, then craft your weekly squad in the team tab. Balance your team size and value, with up to 15 players and a 1000 FPC limit. Opt for fewer high-value stars or more cost-effective players—the strategic thrill of Fantasy Premier League is yours to enjoy!
+                Connect your wallet, mint FPC via the teal button, and immerse yourself in the game. Purchase players in the marketplace, then craft your weekly squad in the team tab. Balance your team size and value, with up to 15 players and a 1000 FPC limit. Opt for fewer high-value stars or more cost-effective players—the strategic thrill of Fantasy Premier League is yours to enjoy!
               </p>
             </div>
             
