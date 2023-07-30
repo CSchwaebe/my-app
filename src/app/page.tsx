@@ -1,8 +1,6 @@
 // Imports
 // ========================================================
 import React from 'react';
-import { AdvancedImage, placeholder } from '@cloudinary/react';
-import Image from 'next/image';
 import { Cloudinary } from "@cloudinary/url-gen";
 import Coins from './components/coins';
 

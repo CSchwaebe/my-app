@@ -87,9 +87,9 @@ export default function Marketplace() {
         return (
             <div className="card w-64 glass m-4">
                 <div className="group">
-                <figure className="pt-4 px-4"><AdvancedImage className="" cldImg={cld.image('p' + player.code)} plugins={[placeholder({ mode: 'blur' })]} />
-                </figure>
-                <div className="relative -mt-12 invisible group-hover:visible">
+                    <figure className="pt-4 px-4"><AdvancedImage className="" cldImg={cld.image('p' + player.code)} plugins={[placeholder({ mode: 'blur' })]} />
+                    </figure>
+                    <div className="relative -mt-12 invisible group-hover:visible">
                         <button className="h-12 w-full py-2 px-4 bg-teal-400 hover:bg-teal-300 text-purple-700 font-bold"
                             onClick={() =>
                                 write_mintNFT({
@@ -101,14 +101,14 @@ export default function Marketplace() {
                                 })/*mintPlayer(player.code)*/}>Mint</button>
                     </div>
 
-                    </div>
+                </div>
 
                 <div className="group text-base-100">
                     <div className='flex text-green-400 antialiased font-black p-4'>
                         <h2 className="flex-3 text-left text-white-100">{player.display_name}</h2>
                         <h2 className="flex-1 text-right">{player.now_cost + " FPC"}</h2>
                     </div>
-                   
+
                 </div>
             </div>
         )
@@ -178,9 +178,9 @@ export default function Marketplace() {
     if (!isLoading_allowance && Number(ethers.formatEther(data_allowance)) < 250) return (
         <div className="w-1/1 p-6 pt-12">
             <div className='text-white-100 w-full text-center font-bold antialiased text-3xl'>
-                
-                    <h1 className='tracking-wide'>Increase Your Spending Limit to Access the Marketplace</h1>
-               
+
+                <h1 className='tracking-wide'>Increase Your Spending Limit to Access the Marketplace</h1>
+
             </div>
             <div className='grid grid-cols-2 mt-12'>
                 <div className="flex justify-center">
@@ -211,22 +211,27 @@ export default function Marketplace() {
     if (!players) return <p>No profile data</p>
 
     return (
-
         <div>
-            <div className="w-1/1 grid grid-cols-8">
+            { /* Header */}
+            <div className="w-full grid grid-cols-4 pr-6 glass bg-none text-white-200">
+                <div className='col-span-4 py-4'>
+                    <h2 className="text-center font-bold text-2xl tracking-wide antialiased">Marketplace</h2>
 
-                <div className="col-span-8 p-8">
-                    <input type="search" onChange={handleChange} placeholder="Search" className="text-base-100 input input-bordered w-full bg-transparent input-accent" required/>
-
-                   
-                    {searchList()}
                 </div>
-
-
 
             </div>
 
-
+            <div className="w-full grid grid-cols-8 pt-8">
+                <div className="col-span-1"></div>
+                <div className="col-span-6">
+                    <input type="search" onChange={handleChange} placeholder="Search" 
+                    className="glass bg-none rounded-none text-base-100 input input-bordered w-full bg-transparent input-accent" required />
+                </div>
+                <div className="col-span-1"></div>
+            </div>
+            <div className="w-full">
+            {searchList()}
+                </div>
         </div>
     )
 }
