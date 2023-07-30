@@ -18,6 +18,7 @@ function sortTeams(all_teams) {
 }
 
 export async function GET(req) {
+    console.log("Getting leaderboard")
     try {
         const mongoClient = await clientPromise;
         const db = mongoClient.db('fpl');
