@@ -92,9 +92,9 @@ export async function getPlayersByCodes(db, codes) {
 
 export async function updateTeam(db, team) {
     const collection = db.collection('teams');
-    const gw = await getActiveGameweek();
+    const gw = await getActiveGameweek(db);
 
-    result = await collection.updateOne(
+    const result = await collection.updateOne(
         { address: team.wallet_address, gameweek: gw },
         {
             $set: {
@@ -105,5 +105,7 @@ export async function updateTeam(db, team) {
         },
         { upsert: true }
     );
+
+    return result;
 
 }
