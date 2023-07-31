@@ -1,7 +1,6 @@
 import { NextResponse, NextRequest } from 'next/server'
 import { Alchemy, Network } from "alchemy-sdk";
-import clientPromise from "../../../lib/mongodb";
-
+import { connectToDatabase, getTeamByAddress, getPlayersByCodes, getActiveGameweek, updateTeam } from "../../db";
 
 const config = {
     apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY,
@@ -10,58 +9,48 @@ const config = {
 
 const alchemy = new Alchemy(config);
 
+async function getNFTsFromAlchemy(address: any) {
+    let response = await alchemy.nft.getNftsForOwner(address, {
+        contractAddresses: [process.env.NEXT_PUBLIC_NFT_CONTRACT_ADDRESS!],
+    });
+    let results = response.ownedNfts;
+
+    //If they own more than 100 nfts, we need to paginate
+    while (response.pageKey) {
+        console.log("Paginating")
+        response = await alchemy.nft.getNftsForOwner(address, {
+            contractAddresses: [process.env.NEXT_PUBLIC_NFT_CONTRACT_ADDRESS!],
+            pageKey: response.pageKey,
+        });
+        results = results.concat(response.ownedNfts);
+        console.log(results.length)
+    }
+
+    // Now we have all the nfts in alchemy's format
+    console.log("Done fetching from alchemy")
+    console.log(results);
+    return results;
+}
+
 function getSlug(url: String) {
     const idx = url.lastIndexOf("/");
     const slug = url.substring(idx + 1);
     return slug;
 }
 
-async function getPlayersFromDB(codes: any[]) {
-    const mongoClient = await clientPromise;
-    const db = mongoClient.db('fpl');
-    const collection = db.collection('players');
-    const all_players = await collection.find({}).toArray();
-    // We get all players from the database
-    // We create a map so that our lookup for each player the user owns
-    // is O(1)
-    const player_map = all_players.reduce(function(map: any, obj) {
-        map[obj.code] = obj;
-        return map;
-    }, {});
-
-    // The codes are the keys, the player data is the values
-    console.log(codes)
-
-    let ret: any[] = []
-    codes.forEach((code: any) => {
-        ret.push(player_map[code])
-    })
-    return ret;
+function extractCodesFromAlchemy(nfts: any[]) {
+    let codes: any[] = [];
+    nfts.forEach((nft: any) => {
+            console.log(nft)
+            let url = nft.tokenUri.raw
+            let code = getSlug(url)
+            codes.push(code)
+    });
+    return codes;
 }
 
-async function getTeamFromDB(wallet_address: any) {
-    const mongoClient = await clientPromise;
-    const db = mongoClient.db('fpl');
-    const team_collection = db.collection('teams');
-    let team = await team_collection.findOne(
-        { address: wallet_address, gameweek: await getGameweek() },
-    )
-    if (team == null) {
-        const temp_field_player = {
-            display_name: "Empty",
-            code: 0,
-            shirt_url: "https://res.cloudinary.com/bigkatoriginal/image/upload/v1689702973/blank_shirt.webp",
-            now_cost: 0,
-        }
-        const empty_team = Array(15).fill(temp_field_player);
-        console.log("Empty team")
-        return empty_team;
-    } else {
-        console.log("Found team")
-        console.log(team.team)
-        return team.team;
-    }
-}
+
+
 
 export async function GET(req: NextRequest) {
     try {
@@ -70,41 +59,19 @@ export async function GET(req: NextRequest) {
         console.log(address)
 
         // We get the nfts owned by that address
-        let response = await alchemy.nft.getNftsForOwner(address, {
-            contractAddresses: [process.env.NEXT_PUBLIC_NFT_CONTRACT_ADDRESS!],
-        });
-
-        let results = response.ownedNfts;
-
-        //If they own more than 100 nfts, we need to paginate
-        while (response.pageKey) {
-            console.log("Paginating")
-            response = await alchemy.nft.getNftsForOwner(address, {
-                contractAddresses: [process.env.NEXT_PUBLIC_NFT_CONTRACT_ADDRESS!],
-                pageKey: response.pageKey,
-            });
-            results = results.concat(response.ownedNfts);
-            console.log(results.length)
-        }
-
-        // Now we have all the nfts in alchemy's format
-        console.log("Done fetching from alchemy")
-        console.log(results);
+        let nfts_alchemy_format = await getNFTsFromAlchemy(address)
 
         // We get the URL from each nft and extract the player code
-        let codes: any[] = [];
-        results.forEach((nft: any) => {
-            console.log(nft)
-            let url = nft.tokenUri.raw
-            let code = getSlug(url)
-            codes.push(code)
-        });
+        let codes = extractCodesFromAlchemy(nfts_alchemy_format)
+
+        //Connect to the database
+        const db = await connectToDatabase();
 
         // We get the player data from the database
-        let players = await getPlayersFromDB(codes);
+        let players = await getPlayersByCodes(db, codes);
 
         //We need to return the team data as well
-        let team = await getTeamFromDB(address);
+        let team = await getTeamByAddress(db, address);
        
         const ret_obj = {
             "players": players,
@@ -191,38 +158,14 @@ function isValid(team: any) {
     return true;
 }
 
-async function getGameweek() {
-    console.log("Getting gameweek")
-    const mongoClient = await clientPromise;
-    const db = mongoClient.db('fpl');
-    const collection = db.collection('gameweek');
-    const gw_object = await collection.findOne({});
-    return gw_object!.gameweek;
-}
-
 export async function POST(req: NextRequest) {
     try {
-        const mongoClient = await clientPromise;
-        const db = mongoClient.db('fpl');
-        const collection = db.collection('teams');
-
         const team = await req.json();
-        const gw = await getGameweek();
         console.log("POST")
         console.log(team)
         let result = null
         if (isValid(team)) {
-            result = await collection.updateOne(
-                { address: team.wallet_address, gameweek: gw },
-                {
-                    $set: {
-                        team: team.team,
-                        gameweek: gw,
-                        score: 0,
-                    },
-                },
-                { upsert: true }
-            );
+            result = await updateTeam(team);
         }
 
         if (result == null) {

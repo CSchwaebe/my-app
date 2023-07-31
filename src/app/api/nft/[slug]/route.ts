@@ -1,5 +1,5 @@
-import clientPromise from "../../../lib/mongodb";
 import { NextResponse, NextRequest } from 'next/server'
+import { connectToDatabase, getPlayerByCode } from '../../db';
 
 export async function GET(req: NextRequest) {
     try {
@@ -8,12 +8,9 @@ export async function GET(req: NextRequest) {
         const code = path.substring(idx + 1);
 
         //console.log(code)
-
-        const mongoClient = await clientPromise;
-        const db = mongoClient.db('fpl');
-        const collection = db.collection('players');
-
-        const results = await collection.findOne({ code: parseInt(code) }) ;
+        const db = await connectToDatabase();
+        const results = await getPlayerByCode(db, code);
+        
         return NextResponse.json(results);
     } catch (e) {
         console.log(e);

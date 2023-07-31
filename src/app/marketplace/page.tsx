@@ -68,7 +68,7 @@ export default function Marketplace() {
 
     useEffect(() => {
         setFetching(true)
-        fetch('/api/bootstrap/marketplace')
+        fetch('/api/marketplace')
             .then((res) => res.json())
             .then((data) => {
                 setPlayers(data)

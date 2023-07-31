@@ -21,7 +21,6 @@ export default function Team() {
     useEffect(() => {
         setLoading(true)
         fetch('/api/profile/' + address)
-            //fetch('/api/bootstrap/team')
             .then((res) => res.json())
             .then((data) => {
                 console.log(data)
@@ -29,7 +28,7 @@ export default function Team() {
                 setTeam(data.team)
                 setLoading(false)
             })
-    }, [])
+    }, [address])
 
     const [searchField, setSearchField] = useState("");
 
