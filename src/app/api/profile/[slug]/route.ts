@@ -161,11 +161,12 @@ function isValid(team: any) {
 export async function POST(req: NextRequest) {
     try {
         const team = await req.json();
+        const db = await connectToDatabase();
         console.log("POST")
         console.log(team)
         let result = null
         if (isValid(team)) {
-            result = await updateTeam(team);
+            result = await updateTeam(db, team);
         }
 
         if (result == null) {

@@ -23,12 +23,8 @@ export async function GET(req) {
             gameweek: gw
         }
 
+        console.log(ret_obj);
         const response = NextResponse.json(ret_obj);
-
-        // Disable caching by setting cache-control headers
-        response.headers.set("Cache-Control", "no-store, must-revalidate");
-        response.headers.set("Pragma", "no-cache");
-        response.headers.set("Expires", "0");
 
         return response;
     } catch (e) {
