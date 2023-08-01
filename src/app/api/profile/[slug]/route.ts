@@ -1,6 +1,7 @@
 import { NextResponse, NextRequest } from 'next/server'
 import { Alchemy, Network } from "alchemy-sdk";
 import { connectToDatabase, getTeamByAddress, getPlayersByCodes, getActiveGameweek, updateTeam } from "../../db";
+import { Team, Player } from "../../../lib/interfaces";
 
 const config = {
     apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY,
@@ -85,46 +86,47 @@ export async function GET(req: NextRequest) {
 }
 
 
-function hasDuplicates(team: any) {
-    let codes: any[] = []
-    for (let i = 0; i < team.length; i++) {
-        if (team[i].code === 0) {
+function hasDuplicates(team: Team) {
+    let codes: number[] = []
+    for (let i = 0; i < team.players.length; i++) {
+        //Allow empty players
+        if (team.players[i].app_data.code === 0) {
             continue;
         }
-        if (codes.includes(team[i].code)) {
+        if (codes.includes(team.players[i].app_data.code)) {
             return true;
         } else {
-            codes.push(team[i].code)
+            codes.push(team.players[i].app_data.code)
         }
     }
     return false;
 }
 
-function hasEmpty(team: any) {
-    for (let i = 0; i < team.length; i++) {
-        if (team[i].code === 0) {
+function hasEmpty(team: Team) {
+    for (let i = 0; i < team.players.length; i++) {
+        if (team.players[i].app_data.code === 0) {
             return true;
         }
     }
     return false;
 }
 
-function exceedsTeamLimit(team: any) {
-    for (let i = 0; i < team.length; i++) {
+function exceedsTeamLimit(team: Team) {
+    for (let i = 0; i < team.players.length; i++) {
         //allow empty players
-        if (team[i].code === 0) {
+        if (team.players[i].app_data.code === 0) {
             continue;
         }
         let count = 1;
-        for (let j = i + 1; j < team.length; j++) {
-            if (team[j].team_name === team[i].team_name) {
+        for (let j = i + 1; j < team.players.length; j++) {
+            if (team.players[j].app_data.team_name === team.players[i].app_data.team_name) {
                 count++;
                 console.log(j)
-                console.log(team[i].team_name + " Count: " + count)
+                console.log(team.players[i].app_data.team_name + " Count: " + count)
 
             }
             if (count > 3) {
-                console.log(team[i].team_name)
+                console.log(team.players[i].app_data.team_name)
                 return true;
             }
         }
@@ -132,15 +134,18 @@ function exceedsTeamLimit(team: any) {
     return false;
 }
 
-function getTotalCost(team: any) {
+function getTotalCost(team: Team) {
     let total = 0
-    for (let i = 0; i < team.length; i++) {
-        total += team[i].now_cost
+    for (let i = 0; i < team.players.length; i++) {
+        total += team.players[i].app_data.now_cost
     }
     return total
 }
 
-function isValid(team: any) {
+
+
+function isValid(team: Team) {
+    console.log(team)
     /*
     if (hasEmpty(team)) {
         return false

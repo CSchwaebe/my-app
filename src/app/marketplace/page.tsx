@@ -10,23 +10,25 @@ import { ethers } from 'ethers';
 import ConnectWalletPopup from '../components/connectWalletPopup';
 import Loading from '../components/loading';
 
+import {AppData, Player, Attribute} from '../lib/interfaces'
+
 export default function Marketplace() {
     const [players, setPlayers] = useState([])
     const [isFetching, setFetching] = useState(true)
     const [searchField, setSearchField] = useState("");
     const filteredPlayers = players.filter(
-        (player: any) => {
+        (player: Player) => {
             return (
                 player
-                    .first_name
+                    .app_data.first_name
                     .toLowerCase()
                     .includes(searchField.toLowerCase()) ||
                 player
-                    .last_name
+                    .app_data.last_name
                     .toLowerCase()
                     .includes(searchField.toLowerCase()) ||
                 player
-                    .team_name
+                    .app_data.team_name
                     .toLowerCase()
                     .includes(searchField.toLowerCase())
             );
@@ -64,6 +66,14 @@ export default function Marketplace() {
         address: process.env.NEXT_PUBLIC_NFT_CONTRACT_ADDRESS,
         abi: nft_contract.abi,
         functionName: 'mintNFT',
+        onSuccess(data) {
+            console.log('Success', data)
+            alert("Mint Successful")
+        },
+        onError(error: any) {
+            console.log('Error', error)
+            alert("Mint Failed :(")
+        },
     })
 
     useEffect(() => {
@@ -80,69 +90,49 @@ export default function Marketplace() {
     * HELPER FUNCTIONS *
     *****************************************************************/
 
+
     /*****************************************************************
     * The following functions are used to render components *
     *****************************************************************/
 
-    function playerCard(player: any) {
+    function playerCard(player: Player) {
 
         return (
+
             <div className="card w-64 glass m-4">
                 <div className="group">
-                    <figure className="pt-4 px-4"><AdvancedImage className="" cldImg={cld.image('p' + player.code)} plugins={[placeholder({ mode: 'blur' })]} />
+                    <figure className="pt-4 px-4"><AdvancedImage className="" cldImg={cld.image('p' + player.app_data.code)} plugins={[placeholder({ mode: 'blur' })]} />
                     </figure>
                     <div className="relative -mt-12 invisible group-hover:visible">
                         <button className="h-12 w-full py-2 px-4 bg-teal-400 hover:bg-teal-300 text-purple-700 font-bold"
                             onClick={() =>
                                 write_mintNFT({
-                                    args: [player.code],
-                                    onError(error: any) {
-                                        console.log("HELLO")
-                                        console.log('Error', error)
-                                    },
+                                    args: [player.app_data.code],
                                 })/*mintPlayer(player.code)*/}>Mint</button>
                     </div>
 
+
                 </div>
 
-                <div className="group text-base-100">
-                    <div className='flex text-green-400 antialiased font-black p-4'>
-                        <h2 className="flex-3 text-left text-white-100">{player.display_name}</h2>
-                        <h2 className="flex-1 text-right">{player.now_cost + " FPC"}</h2>
+                <div className='pt-0 px-2'>
+                    <div className='inline-block float-left p-2 antialiased text-base-100'>
+                        <h2 className="text-left text-base font-black">{player.app_data.display_name}</h2>
+                        <h2 className="text-left text-sm">
+                            <span className="font-medium">{player.app_data.team_abbreviation} </span>
+                            <span className="font-extralight">{player.app_data.position}</span>
+                        </h2>
                     </div>
 
+                    <div className='inline-block float-right p-2 antialiased font-bold text-green-400'>
+                        <h2 className="text-right text-base">{player.app_data.now_cost + " FPC"}</h2>
+                    </div>
+
+                    
                 </div>
+
+
             </div>
         )
-    }
-
-    // Returns each individual card in the search list
-
-    function playerCard_old(player: any) {
-
-        return (
-            <div className="shadow-md w-64 box-border m-2 p-0 rounded-3xl bg-purple-700 flex-initial border-4 border-purple-700 hover:cursor-pointer hover:border-green-400 overflow-hidden" key={player._id}>
-                <div className="w-1/1 bg-white-100 group">
-                    <AdvancedImage className="p-2 pb-0" cldImg={cld.image('p' + player.code)} plugins={[placeholder({ mode: 'blur' })]} />
-                    <div className="relative -mt-12 invisible group-hover:visible">
-                        <button className="h-12 w-full py-2 px-4 bg-teal-400 hover:bg-teal-300 text-purple-700 font-bold"
-                            onClick={() =>
-                                write_mintNFT({
-                                    args: [player.code],
-                                    onError(error: any) {
-                                        console.log("HELLO")
-                                        console.log('Error', error)
-                                    },
-                                })/*mintPlayer(player.code)*/}>Mint</button>
-                    </div>
-                </div>
-
-                <div className='flex bg-purple-700 text-green-400 antialiased font-black p-4'>
-                    <h2 className="flex-3 text-left">{player.display_name}</h2>
-                    <h2 className="flex-1 text-right">{player.now_cost}</h2>
-                </div>
-            </div>
-        );
     }
 
     // Returns the first X players matching the search criteria
@@ -159,7 +149,7 @@ export default function Marketplace() {
     * MAIN RENDER *
     ******************************************************************/
     if (isFetching) return (
-       <Loading />
+        <Loading />
     )
 
     if (isDisconnected) return (
@@ -215,14 +205,14 @@ export default function Marketplace() {
             <div className="w-full grid grid-cols-8 pt-8">
                 <div className="col-span-1"></div>
                 <div className="col-span-6">
-                    <input type="search" onChange={handleChange} placeholder="Search" 
-                    className="glass bg-none rounded-none text-base-100 input input-bordered w-full bg-transparent input-accent" required />
+                    <input type="search" onChange={handleChange} placeholder="Search"
+                        className="glass bg-none rounded-none text-base-100 input input-bordered w-full bg-transparent input-accent" required />
                 </div>
                 <div className="col-span-1"></div>
             </div>
             <div className="w-full">
-            {searchList()}
-                </div>
+                {searchList()}
+            </div>
         </div>
     )
 }

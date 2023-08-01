@@ -37,33 +37,58 @@ export async function getPlayers(db) {
 
 export async function getPlayerByCode(db, code) {
     const collection = db.collection('players');
-    const results = await collection.findOne({ code: parseInt(code) });
+    const results = await collection.findOne({ "app_data.code": parseInt(code) });
     return results;
 }
 
 export async function getTeamByAddress(db, wallet_address) {
     const team_collection = db.collection('teams');
+    const gw = await getActiveGameweek(db)
 
     // Get the team from the database
     let team = await team_collection.findOne(
-        { address: wallet_address, gameweek: await getActiveGameweek(db) },
+        { address: wallet_address, gameweek: gw },
     )
 
     // If the team doesn't exist, return an empty team
     if (team == null) {
         const temp_field_player = {
-            display_name: "Empty",
-            code: 0,
-            shirt_url: "https://res.cloudinary.com/bigkatoriginal/image/upload/v1689702973/blank_shirt.webp",
-            now_cost: 0,
+            description: "",
+            external_url: "",
+            image: "",
+            name: "",
+            attributes: [],
+            app_data: {
+                first_name: null,
+                last_name: null,
+                display_name: "Empty",
+                code: 0,
+                event_points: null,
+                team: null,
+                team_code: null,
+                team_name: null,
+                team_abbreviation: null,
+                now_cost: null,
+                position: null,
+                image_url: null,
+                shirt_url: "https://res.cloudinary.com/bigkatoriginal/image/upload/v1689702973/blank_shirt.webp"
+            }
         }
+    
         const empty_team = Array(15).fill(temp_field_player);
+        const team_obj = {
+            address: wallet_address,
+            score: 0,
+            gameweek: gw,
+            players: empty_team
+
+        }
         console.log("Empty team")
-        return empty_team;
+        return team_obj;
     } else {
         console.log("Found team")
         //console.log(team.team)
-        return team.team;
+        return team;
     }
 }
 
@@ -75,7 +100,7 @@ export async function getPlayersByCodes(db, codes) {
     // We create a map so that our lookup for each player the user owns
     // is O(1)
     const player_map = all_players.reduce(function (map, obj) {
-        map[obj.code] = obj;
+        map[obj.app_data.code] = obj;
         return map;
     }, {});
 
@@ -93,15 +118,13 @@ export async function getPlayersByCodes(db, codes) {
 export async function updateTeam(db, team) {
     const collection = db.collection('teams');
     const gw = await getActiveGameweek(db);
-
+    console.log("Updating team")
+    console.log(team)
+    
     const result = await collection.updateOne(
-        { address: team.wallet_address, gameweek: gw },
+        { address: team.address, gameweek: gw },
         {
-            $set: {
-                team: team.team,
-                gameweek: gw,
-                score: 0,
-            },
+            $set: team,
         },
         { upsert: true }
     );

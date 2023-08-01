@@ -60,6 +60,9 @@ export default function Header() {
                     <a href="/leaderboard" className="block mt-4 lg:inline-block lg:mt-0 text-purple-700 hover:text-red-400 mr-4">
                         Leaderboard
                     </a>
+                    <a href="/faq" className="block mt-4 lg:inline-block lg:mt-0 text-purple-700 hover:text-red-400 mr-4">
+                        FAQ
+                    </a>
                     {/*
                     
                     <a href="/faq" className="block mt-4 lg:inline-block lg:mt-0 text-purple-700 hover:text-red-400 mr-4">

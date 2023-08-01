@@ -23,6 +23,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/api/bootstrap.js", "src/app/components/player.jsx", "src/providers/wagmi/index.jsx", "src/app/team/page.jsx", "src/app/api/bootstrap/team/route.js", "src/app/marketplace/page.tsx", "src/app/api/mint/player/route.js", "src/app/components/marketplaceCard.jsx", "src/app/components/updateTokenAllowance.jsx", "src/app/api/leaderboard/route.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/api/bootstrap.js", "src/app/components/player.jsx", "src/providers/wagmi/index.jsx", "src/app/team/page.tsx", "src/app/api/bootstrap/team/route.js", "src/app/marketplace/page.tsx", "src/app/api/mint/player/route.js", "src/app/components/marketplaceCard.jsx", "src/app/components/updateTokenAllowance.jsx", "src/app/api/leaderboard/route.js", "src/app/api/db.js"],
   "exclude": ["node_modules"]
 }

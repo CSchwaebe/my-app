@@ -7,7 +7,7 @@ export async function GET(req: NextRequest) {
         const idx = path.lastIndexOf("/");
         const code = path.substring(idx + 1);
 
-        //console.log(code)
+        console.log(code)
         const db = await connectToDatabase();
         const results = await getPlayerByCode(db, code);
         
