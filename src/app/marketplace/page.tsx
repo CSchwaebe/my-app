@@ -10,7 +10,7 @@ import { ethers } from 'ethers';
 import ConnectWalletPopup from '../components/connectWalletPopup';
 import Loading from '../components/loading';
 
-import {AppData, Player, Attribute} from '../lib/interfaces'
+import { AppData, Player, Attribute } from '../lib/interfaces'
 
 export default function Marketplace() {
     const [players, setPlayers] = useState([])
@@ -34,11 +34,13 @@ export default function Marketplace() {
             );
         }
     );
+
     const cld = new Cloudinary({
         cloud: {
             cloudName: 'bigkatoriginal'
         }
     });
+
     const handleChange = (e: any) => {
         setSearchField(e.target.value);
     };
@@ -51,6 +53,10 @@ export default function Marketplace() {
         abi: erc_contract.abi,
         functionName: "approve",
         args: [process.env.NEXT_PUBLIC_NFT_CONTRACT_ADDRESS, 10000000000000000000000],
+        onSuccess(data) {
+            console.log('Success', data)
+            window.location.reload();
+        },
     })
 
 
@@ -127,7 +133,7 @@ export default function Marketplace() {
                         <h2 className="text-right text-base">{player.app_data.now_cost + " FPC"}</h2>
                     </div>
 
-                    
+
                 </div>
 
 
@@ -157,32 +163,24 @@ export default function Marketplace() {
     )
 
     if (!isLoading_allowance && Number(ethers.formatEther(data_allowance)) < 250) return (
-        <div className="w-1/1 p-6 pt-12">
-            <div className='text-white-100 w-full text-center font-bold antialiased text-3xl'>
-
-                <h1 className='tracking-wide'>Increase Your Spending Limit to Access the Marketplace</h1>
-
+        <div className="w-1/1">
+            { /* Header */}
+            <div className="w-full glass bg-none text-white-200">
+                <div className='py-4'>
+                    <h2 className="text-center font-bold text-2xl tracking-wide antialiased">Increase Your Spending Limit to Access the Marketplace</h2>
+                    <br></br>
+                    <h2 className="text-center font-bold text-sm tracking-wide antialiased">
+                        {"*This allows the NFT contract to use your FPC to mint players. We suggest setting it to 10,000 FPC to minimize future adjustments."}</h2>
+                </div>
             </div>
-            <div className='grid grid-cols-2 mt-12'>
-                <div className="flex justify-center">
-                    <div className="flex-initial">
-                        <div className='col-span-1 m-4 bg-white-100 w-64 shadow-xl rounded-xl overflow-hidden'>
-                            <h2 className="bg-purple-700 p-4 text-center text-white-100 text-xl antialiased tracking-wide font-bold">Your Limit</h2>
-                            <h3 className="text-center text-purple-700 p-4 text-xl">{Number(ethers.formatEther(data_allowance))}</h3>
-                        </div>
+
+
+            <div className='w-full mt-12 text-center'>
+                <div className='flex flex-row justify-center items-center'>
+                    <div className='glass bg-none'>               
+                        <button onClick={() => approve_write()} className="btn btn-outline btn-info w-64">Increase Limit</button>
                     </div>
                 </div>
-                <div className="flex justify-center">
-                    <div className="flex-initial">
-                        <div className='col-span-1 m-4 bg-white-100 w-64 shadow-xl rounded-xl overflow-hidden'>
-                            <h2 className="bg-purple-700 p-4 text-center text-white-100 text-xl antialiased tracking-wide font-bold">Increase</h2>
-                            <button onClick={() => approve_write()} className="w-full text-center text-purple-700 p-4 text-xl hover:bg-green-400">Click Here</button>
-
-                        </div>
-                    </div>
-
-                </div>
-
 
             </div>
 
@@ -194,12 +192,10 @@ export default function Marketplace() {
     return (
         <div>
             { /* Header */}
-            <div className="w-full grid grid-cols-4 pr-6 glass bg-none text-white-200">
-                <div className='col-span-4 py-4'>
+            <div className="w-full pr-6 glass bg-none text-white-200">
+                <div className='py-4'>
                     <h2 className="text-center font-bold text-2xl tracking-wide antialiased">Marketplace</h2>
-
                 </div>
-
             </div>
 
             <div className="w-full grid grid-cols-8 pt-8">

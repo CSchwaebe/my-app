@@ -29,7 +29,7 @@ async function getNFTsFromAlchemy(address: any) {
 
     // Now we have all the nfts in alchemy's format
     console.log("Done fetching from alchemy")
-    console.log(results);
+    //console.log(results);
     return results;
 }
 
@@ -42,7 +42,7 @@ function getSlug(url: String) {
 function extractCodesFromAlchemy(nfts: any[]) {
     let codes: any[] = [];
     nfts.forEach((nft: any) => {
-            console.log(nft)
+            //console.log(nft)
             let url = nft.tokenUri.raw
             let code = getSlug(url)
             codes.push(code)

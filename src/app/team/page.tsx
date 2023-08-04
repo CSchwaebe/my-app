@@ -11,21 +11,15 @@ export default function Team() {
     const [players, setPlayers] = useState<Player[]>([])
     const [team, setTeam] = useState<Team>({
         address: "",
+        team_name: "",
         gameweek: "0",
         score: 0,
         players: [],
     })
+    const [team_name, set_team_name] = useState<string>("")
     const [isLoading, setLoading] = useState(true)
     const { address, isConnecting, isDisconnected } = useAccount()
-    /*
-    const temp_field_player = {
-        display_name: "Empty",
-        code: 0,
-        shirt_url: "https://res.cloudinary.com/bigkatoriginal/image/upload/v1689702973/blank_shirt.webp",
-        now_cost: 0,
-    }
-    */
-
+    
     const temp_field_player = {
         description: "",
         external_url: "",
@@ -52,6 +46,7 @@ export default function Team() {
 
 
     useEffect(() => {
+        if (address == undefined) return
         setLoading(true)
         fetch('/api/profile/' + address)
             .then((res) => res.json())
@@ -59,6 +54,7 @@ export default function Team() {
                 console.log(data)
                 setPlayers(data.players)
                 setTeam(data.team)
+                set_team_name(data.team.team_name)
                 setLoading(false)
             })
     }, [address])
@@ -72,7 +68,7 @@ export default function Team() {
     });
 
     // The results from the search
-    const filteredPlayers = players.filter(
+    const filteredPlayers = players?.filter(
         (player: Player) => {
             return (
                 player
@@ -94,6 +90,10 @@ export default function Team() {
     //Handles the change in the search field
     const handleChange = (e: any) => {
         setSearchField(e.target.value);
+    };
+
+    const handleTeamNameChange = (e: any) => {
+        set_team_name(e.target.value);
     };
 
     /*****************************************************************
@@ -246,6 +246,7 @@ export default function Team() {
 
     async function saveTeam() {
         console.log("save team")
+        team.team_name = team_name;
         console.log(team)
 
         /*
@@ -417,8 +418,7 @@ export default function Team() {
             { /* Header */}
             <div className="w-full grid grid-cols-4 py-4 pr-6 glass bg-none text-white-200">
                 <div className='col-span-3'>
-                    <h2 className="text-center font-bold text-2xl antialiased">Your Team</h2>
-
+                    <input type="text" onChange={handleTeamNameChange} placeholder={team_name} value={team_name} className="input input-ghost w-full text-center font-bold text-2xl antialiased" />
                 </div>
                 <div className='col-span-1'>
                     <h2 className="text-center font-bold text-2xl antialiased">Your Players</h2>

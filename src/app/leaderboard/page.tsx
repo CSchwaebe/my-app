@@ -68,7 +68,7 @@ export default function Marketplace() {
         return (
             <div className="grid grid-cols-10 row-span-1 p-2 bg-green-400 bg-opacity-70 text-purple-700 border-b border-opacity-50">
                 <div className="col-span-1 text-left pl-4">{team.rank}</div>
-                <div className="col-span-7 text-left pl-4">{team.address}</div>
+                <div className="col-span-7 text-left pl-4">{team.team_name}</div>
                 <div className="col-span-2 text-center">{team.score}</div>
             </div>
         )
@@ -81,7 +81,7 @@ export default function Marketplace() {
         return (
             <div className="grid grid-cols-10 row-span-1 p-2 bg-white-100 bg-opacity-50 text-purple-700 border-b border-opacity-50">
                 <div className="col-span-1 text-left pl-4">{team.rank}</div>
-                <div className="col-span-7 text-left pl-4">{team.address}</div>
+                <div className="col-span-7 text-left pl-4">{team.team_name}</div>
                 <div className="col-span-2 text-center">{team.score}</div>
             </div>
         )
@@ -111,7 +111,7 @@ export default function Marketplace() {
                     {/* Heading */}
                     <div className="grid grid-cols-10 row-span-1 p-2">
                         <div className="col-span-1 text-left text-white-100 font-bold text-xl pl-4">Rank</div>
-                        <div className="col-span-7 text-left text-white-100 font-bold text-xl pl-4">Address</div>
+                        <div className="col-span-7 text-left text-white-100 font-bold text-xl pl-4">Team Name</div>
                         <div className="col-span-2 text-center text-white-100 font-bold text-xl">Score</div>
                     </div>
 

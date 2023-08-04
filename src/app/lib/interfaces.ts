@@ -30,6 +30,7 @@ export interface Player {
 
 export interface Team {
     address: string,
+    team_name: string,
     gameweek: string,
     score: number,
     players: Player[]

@@ -78,6 +78,7 @@ export async function getTeamByAddress(db, wallet_address) {
         const empty_team = Array(15).fill(temp_field_player);
         const team_obj = {
             address: wallet_address,
+            team_name: wallet_address,
             score: 0,
             gameweek: gw,
             players: empty_team
