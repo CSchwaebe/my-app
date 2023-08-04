@@ -5,7 +5,7 @@ import { Team, Player } from "../../../lib/interfaces";
 
 const config = {
     apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY,
-    network: Network.ARB_GOERLI,
+    network: Network.ARB_MAINNET,
 };
 
 const alchemy = new Alchemy(config);
