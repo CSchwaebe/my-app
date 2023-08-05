@@ -1,4 +1,5 @@
 import { MongoClient } from 'mongodb'
+import { ObjectID } from 'mongodb'
 
 const uri = process.env.MONGODB_URI
 const options = {}
@@ -120,6 +121,15 @@ export async function updateTeam(db, team) {
     const collection = db.collection('teams');
     const gw = await getActiveGameweek(db);
     console.log("Updating team")
+
+    // Remove the _id field from the team
+    delete team._id;
+
+    // Remove the _id field from each player
+    for (let i = 0; i < team.players.length; i++) {
+        delete team.players[i]._id
+        //team.players[i] = await getPlayerByCode(db, team.players[i].app_data.code)
+    }
     console.log(team)
     
     const result = await collection.updateOne(
