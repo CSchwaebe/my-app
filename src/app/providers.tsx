@@ -21,8 +21,9 @@ import {
   optimism,
   */
   arbitrum,
-  arbitrumGoerli
   /*
+  arbitrumGoerli
+  
   zora,
   goerli,
     */
@@ -33,7 +34,7 @@ const { chains, publicClient, webSocketPublicClient } = configureChains(
   [
     
     arbitrum,
-    arbitrumGoerli
+    //arbitrumGoerli
 
   ],
   [publicProvider()]
