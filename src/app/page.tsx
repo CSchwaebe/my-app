@@ -72,8 +72,7 @@ export default function Home() {
               </li>
 
               <li className="ml-8 list-disc">
-                <span className="italic text-white-300">Prize Pool: </span>2% is
-                added to the weekly prize pool for that gameweek's winners.
+                <span className="italic text-white-300">Prize Pool: </span>{"2% is added to the weekly prize pool for that gameweek's winners."}
               </li>
               <li className="ml-8 list-disc">
                 <span className="italic text-white-300">Development: </span> 1%
