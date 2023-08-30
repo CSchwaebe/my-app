@@ -144,6 +144,7 @@ export default function Marketplace() {
     // Returns the first X players matching the search criteria
     function searchList() {
         const filtered = filteredPlayers.slice(0, 20).map(player => playerCard(player));
+        
         return (
             <div className="flex flex-row flex-wrap justify-center p-6">
                 {filtered}

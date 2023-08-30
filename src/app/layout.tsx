@@ -6,6 +6,7 @@ import Header from "./components/header";
 import Container from "./components/mainContainer";
 import Footer from "./components/footer";
 import '@rainbow-me/rainbowkit/styles.css';
+import { Analytics } from '@vercel/analytics/react';
 
 // Layout
 // ========================================================
@@ -27,6 +28,8 @@ export default function RootLayout({
           <Footer />
 
           </Providers>
+          <Analytics />
+
       </body>
     </html>
   )

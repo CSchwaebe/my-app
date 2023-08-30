@@ -58,7 +58,10 @@ export default function Coins() {
         <div className="block pr-4 py-2 mt-4 lg:inline-block lg:mt-0 mr-4">
             
             <div className="block rounded-full px-4 py-2 mt-4 lg:inline-block lg:mt-0 text-purple-700 bg-teal-400 mr-4">
-                <button onClick={() => buyCoins(0.025)} className="text-center text-sm">{"Buy 1000 FPC"}</button>
+                <a href="https://baseswap.fi/swap?outputCurrency=0x33733600A1E70C788d5dAE86f0359698dd07404A" target="_blank" className="text-center text-sm">Buy FPC</a>
+                {/* 
+                                <button onClick={() => buyCoins(0.025)} className="text-center text-sm">{"Buy 1000 FPC"}</button>
+                */}
             </div>
             <div className="block pr-4 py-2 mt-4 lg:inline-block lg:mt-0 text-purple-700">
                 <p className="text-center text-sm text-red-400">{"Balance: " + balance_data?.formatted.substring(0, 7) + " FPC"}</p>

@@ -21,6 +21,8 @@ import {
   optimism,
   */
   arbitrum,
+  base,
+  goerli
   /*
   arbitrumGoerli
   
@@ -33,7 +35,9 @@ import { publicProvider } from 'wagmi/providers/public';
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [
     
-    arbitrum,
+    //arbitrum,
+    //goerli,
+    base,
     //arbitrumGoerli
 
   ],

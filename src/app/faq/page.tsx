@@ -41,11 +41,11 @@ export default function FAQ() {
                 <div className="glass bg-none col-span-1 row-span-1 p-4 rounded antialiased">
                     <h3 className="text-center text-xl font-bold  text-white-100 p-4">{"Ok I'm still confused, how do I use this?"}</h3>
                     <p className="text-justify text-sm font-bold  text-white-100 p-4 tracking-normal">
-                        {"1. Connect your wallet in the top right. We're on Arbitrum so make sure you have some ETH on Arbitrum (~0.03 ETH). If you need help getting your ETH to Arbitrum go to"} <a className="underline decoration-solid" target="_blank" href="https://stargate.finance/transfer">Stargate</a><br></br><br></br>
-                        {"2. Buy 1000 FPC using the teal button in the center of the header"} <br></br><br></br>
+                        {"1. Connect your wallet in the top right. We're on Base so make sure you have some ETH on Base. If you need help getting your ETH to Base go to"} <a className="underline decoration-solid" target="_blank" href="https://stargate.finance/transfer">Stargate</a><br></br><br></br>
+                        {"2. Buy at least 1000 FPC using the teal button in the center of the header"} <br></br><br></br>
                         {"3. Navigate to the Marketplace tab and adjust your spending limit. We suggest setting it to 10,000 FPC. This step enables the NFT contract to utilize your FPC when minting players."} <br></br><br></br>
                         {"4. Mint players in the Marketplace. You can search by player or team name. (Filters and more player data coming soon.)"} <br></br><br></br>
-                        {"5. Head to the Team tab to pick your team. Your owned players are displayed on the right, simply click on them to add to your team. Make sure you name and save your team before exiting!"} <br></br><br></br>
+                        {"5. Head to the Team tab to pick your team. Your owned players are displayed on the right, simply click on them to add to your team.  You can have up to three players per team and no duplicates. Make sure you name and save your team before exiting!"} <br></br><br></br>
                         {"6. Check the Leaderboard to see how you did last week."} <br></br><br></br>
                     </p>
                 </div>

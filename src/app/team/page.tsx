@@ -43,8 +43,6 @@ export default function Team() {
         }
     }
 
-
-
     useEffect(() => {
         if (address == undefined) return
         setLoading(true)

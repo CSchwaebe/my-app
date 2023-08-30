@@ -5,7 +5,7 @@ import { Team, Player } from "../../../lib/interfaces";
 
 const config = {
     apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY,
-    network: Network.ARB_MAINNET,
+    network: Network.ETH_GOERLI,
 };
 
 const alchemy = new Alchemy(config);
@@ -15,6 +15,9 @@ async function getNFTsFromAlchemy(address: any) {
         contractAddresses: [process.env.NEXT_PUBLIC_NFT_CONTRACT_ADDRESS!],
     });
     let results = response.ownedNfts;
+
+    console.log(response)
+    console.log(process.env.NEXT_PUBLIC_NFT_CONTRACT_ADDRESS)
 
     //If they own more than 100 nfts, we need to paginate
     while (response.pageKey) {
